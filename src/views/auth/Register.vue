@@ -30,9 +30,14 @@
           <div class="thumbnail" title="点击图片重新获取验证码" @click="getCaptcha">
             <div class="captcha vcenter" v-html="captchaTpl"></div>
           </div>
-          <button type="submit" class="btn btn-lg btn-success btn-block" @click="register">
+          <span @click="register">
+            <button type="submit" class="btn btn-lg btn-success btn-block">
+                <i class="fa fa-btn fa-sign-in"></i>注册
+            </button>
+          </span>
+          <!-- <button type="submit" class="btn btn-lg btn-success btn-block" @click="register">
             <i class="fa fa-btn fa-sign-in"></i> 注册
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -68,6 +73,7 @@ export default {
       this.localCaptcha = captcha
     },
     register(e) {
+      console.log('bbb')
       this.$nextTick(() => {
         const target = e.target.type === 'submit' ? e.target : e.target.parentElement
 
@@ -76,7 +82,7 @@ export default {
         }
       })
     },
-    submit() {
+    submit() {console.log('aaa')
       if (this.captcha.toUpperCase() !== this.localCaptcha) {
         this.showMsg('验证码不正确')
         this.getCaptcha()
@@ -86,8 +92,10 @@ export default {
           password: this.password,
           avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
         }
-        const localUser = ls.getItem('user')
-
+        // const localUser = ls.getItem('user')
+        // 从仓库中获取用户信息
+        const localUser = this.$store.state.user
+        console.log(localUser)
         if (localUser) {
           if (localUser.name === user.name) {
             this.showMsg('用户名已存在')
@@ -100,7 +108,9 @@ export default {
       }
     },
     login(user) {
-      ls.setItem('user', user)
+      // ls.setItem('user', user)
+      // 为 => 分发 login 事件，以保存用户信息和登录
+      this.$store.dispatch('login',user)
       this.showMsg('注册成功', 'success')
     },
     showMsg(msg, type = 'warning') {
