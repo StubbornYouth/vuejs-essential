@@ -228,12 +228,10 @@ export default {
 
       // 按键松开监听
       simplemde.codemirror.on('keyup', (codemirror, event) => {
-        console.log('??')
         // 使用 Ctrl+Enter 时提交评论
         if (event.ctrlKey && event.keyCode === 13) {
           this.comment()
         } else if (this.commentId && event.keyCode === 27) { // 存在 commentId，且按下 Esc 键时
-           console.log('???')
           // 取消编辑评论
           this.cancelEditComment()
         }
@@ -289,6 +287,7 @@ export default {
             this.likeUsers = this.recompute('likeUsers')
           })
         }else {
+          console.log('?????')
           // 添加已赞样式
           this.likeClass = 'active animate__animated animate__rubberBand'
           // 分发 like 事件，传入 isAdd 参数点赞，更新实例的 likeUsers 为返回的值
@@ -417,14 +416,9 @@ export default {
     },
     // 返回带用户信息的文章的某项属性
     recompute(key) {
-      console.log(this.articles)
       const articleId = this.$route.params.articleId
       // 这里的文章是基于 getters.computedArticles 的，所以包含用户信息了
       let article = this.$store.getters.getArticleById(articleId)
-      // console.log(article)
-      // console.log(article.uname)
-      // let articles = this.$store.getters.getArticlesByUid(null,article.uname)
-      // console.log(articles)
       let arr
 
       if (article) {

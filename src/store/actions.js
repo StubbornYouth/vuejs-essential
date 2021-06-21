@@ -79,19 +79,17 @@ export const like = ({ state, commit}, {articleId, isAdd}) => {
   let likeUsers = []
   // 用户id 默认1
   const uid = 1
-
   if(!Array.isArray(articles)) articles = []
-
   for(let article of articles) {
     // 找到对应文章
     if(parseInt(article.articleId) === parseInt(articleId)) {
+
       // 获取点赞用户列表
       likeUsers = Array.isArray(article.likeUsers) ? article.likeUsers : likeUsers
       // 是否点赞
       if(isAdd) {
         // 判断用户是否已点赞
         const isAdded = likeUsers.some(likeUser => parseInt(likeUser.uid) === uid)
-
         if(!isAdded) {
           likeUsers.push({ uid })
         }
@@ -106,11 +104,10 @@ export const like = ({ state, commit}, {articleId, isAdd}) => {
           }
         }
       }
+      // 更新文章的点赞用户列表
+      article.likeUsers = likeUsers
+      break
     }
-
-    // 更新文章的点赞用户列表
-    article.likeUsers = likeUsers
-    break
   }
 
   // 提交更新事件

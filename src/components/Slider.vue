@@ -2,8 +2,8 @@
   <div v-if="slides.length" class="carousel slide" @mouseover="stop" @mouseout="play">
     <div class="carousel-inner">
       <transition
-        enter-active-class="animated slideInRight"
-        leave-active-class="animated slideOutLeft"
+        enter-active-class="animate_animated animate_slideInRight"
+        leave-active-class="animate_animated animate_slideOutLeft"
       >
         <div v-if="show" key="current">
             <!-- 我们可以在 <slot> 插槽上传递数据，就像我们使用 props 传递数据一样，此时的插槽就是一个 作用域插槽。我们可以在父组件中， 使用 v-slot 特性来接收从子组件传递过来的 props，然后使用它定义想显示的内容 -->
